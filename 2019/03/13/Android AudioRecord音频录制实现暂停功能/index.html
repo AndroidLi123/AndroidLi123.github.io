@@ -1,20 +1,144 @@
-extends partial/layout
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="keywords" content="hexo, autumn">
+    <title>
+        WangCode&#39;s Blog
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.css">
 
-block site_title
-    != page.title + " · " + config.title
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css">
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@1.0.0/dist/hexo-infinite-scroll.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@1.0.0/dist/hexo-infinite-scroll.min.js"></script>
+    <script>
+        infiniteScroll()
 
-block description
-    - var desc = page.desc || page.title + ' - ' + config.author;
-    meta(name="description", content=desc)
+        // for mobile menu
+        $(function () {
+            $('.social-button').click(function () {
+                if ($('.social-links').hasClass('hide-links')) {
+                    $('.social-links').removeClass('hide-links')
+                } else {
+                    $('.social-links').addClass('hide-links')
+                }
+            })
+        })
+    </script>
+</head>
 
-block container
-    include mixins/post
-    +post(page)
+    <body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <div class="container">
+            <header class="header">
+    <h1 class="title">
+        <a href="/" class="logo">
+            WangCode&#39;s Blog
+        </a>
+    </h1>
+    <h2 class="desc">
+        
+    </h2>
 
-block pagination
-    include mixins/paginator
-    +post()
-    include partial/comment
+    <nav class="links">
+        <button class="social-button">
+            menu
+        </button>
+        <ul class="social-links hide-links">
+            
+                <li>
+                    <a href="https://github.com/FrontendSophie">
+                        Github
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://www.linkedin.com/in/frontendsophie/">
+                        LinkedIn
+                    </a>
+                </li>
+                
+        </ul>
+    </nav>
+</header>
+                <main class="main">
+                    <article class="post">
+    
+    
+    
+    <h2 class="post-title">
+        Android AudioRecord音频录制实现暂停功能
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-03-13
+        </li>
+        <li>
+            WangCode
+        </li>
+    </ul>
+    <div class="post-content">
+        <p>AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。</p>
+<ol>
+<li><p>首先先得初始化AudioRecord对象 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,</span><br><span class="line">        CHANNEL_CONFIG, AUDIO_FORMAT, minBufferSize);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​       上面的参数具体指声道数,采样率以及最小缓冲区。</p>
+<ol start="2">
+<li><p>新建文件用来存储录制的音频数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC),</span><br><span class="line">        &quot;wenwenrecord.pcm&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启一个线程不断的往文件里面写数据</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">    //往文件里面写数据</span><br><span class="line">    audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<p><strong>问题来了，官方只提供给了我们录制音频的接口，并没有提供暂停和停止的接口，该怎么实现呢？</strong></p>
+<p>嗯，其实只要仔细想一下就知道了，我在上面开启了一个线程往文件里面写数据，只需要定义一个标志变量用来判断是否继续写入数据就行了。如果是暂停录制就不执行audioRecord.read，如果是停止录制就跳出while循环。具体实现如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        FileOutputStream os = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            os = new FileOutputStream(file);</span><br><span class="line">        &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (null != os) &#123;</span><br><span class="line">            while (currentAudioState.get() == PAUSE_STATE ||</span><br><span class="line">                    currentAudioState.get() == REDORDING_STATE) &#123;</span><br><span class="line">                if (currentAudioState.get() == PAUSE_STATE) &#123;</span><br><span class="line">                    LogUtil.i(&quot;Record&quot;, &quot;pause...&quot;);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    int read = audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">                 </span><br><span class="line">                    if (AudioRecord.ERROR_INVALID_OPERATION != read) &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            os.write(data);</span><br><span class="line">                        &#125; catch (IOException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                LogUtil.i(TAG, &quot;run: close file output stream !&quot;);</span><br><span class="line">                os.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<p>这里的currentAudioState定义为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 当前录音状态</span><br><span class="line"> */</span><br><span class="line">private AtomicInteger currentAudioState = new AtomicInteger(STOP_STATE);</span><br></pre></td></tr></table></figure>
+<p>为了保证在多线程环境下的原子操作我用了并发包里的AtomicInteger。</p>
+<p>完。</p>
 
-block copyright
-    include partial/copyright
+    </div>
+</article>
+                </main>
+                <aside class="aside">
+                    <section class="aside-section">
+                        
+    <h1>Categories</h1>
+
+    
+
+                    </section>
+                    <section class="aside-section">
+                        
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+                    </section>
+                    <section class="aside-section tag">
+                        
+    <h1>Tags</h1>
+
+    
+
+                    </section>
+                </aside>
+        </div>
+    </body>
+
+</html>
