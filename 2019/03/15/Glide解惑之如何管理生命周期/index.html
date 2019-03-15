@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="WangCode's Blog" type="application/atom+xml">
 
@@ -81,13 +83,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="WangCode&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="本人在使用Glide图片下载框架的时候,一直有一个疑惑,它到底是怎么做到Context在Destory的时候自动停止下载请求的,带着好奇心的驱使我去了解了下源码,心里大概知道了真相. 一般我们要下载图片，Glide是这样做的： 1Glide.with(context).load(url).into(imageview); 非常简洁精炼的用法,但是内部却做了大量的工作,下面一步一步来分析。 首先Gl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Glide解惑之如何管理生命周期">
+<meta property="og:url" content="http://yoursite.com/2019/03/15/Glide解惑之如何管理生命周期/index.html">
 <meta property="og:site_name" content="WangCode&#39;s Blog">
+<meta property="og:description" content="本人在使用Glide图片下载框架的时候,一直有一个疑惑,它到底是怎么做到Context在Destory的时候自动停止下载请求的,带着好奇心的驱使我去了解了下源码,心里大概知道了真相. 一般我们要下载图片，Glide是这样做的： 1Glide.with(context).load(url).into(imageview); 非常简洁精炼的用法,但是内部却做了大量的工作,下面一步一步来分析。 首先Gl">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-15T08:52:11.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WangCode&#39;s Blog">
+<meta name="twitter:title" content="Glide解惑之如何管理生命周期">
+<meta name="twitter:description" content="本人在使用Glide图片下载框架的时候,一直有一个疑惑,它到底是怎么做到Context在Destory的时候自动停止下载请求的,带着好奇心的驱使我去了解了下源码,心里大概知道了真相. 一般我们要下载图片，Glide是这样做的： 1Glide.with(context).load(url).into(imageview); 非常简洁精炼的用法,但是内部却做了大量的工作,下面一步一步来分析。 首先Gl">
 
 
 
@@ -117,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/15/Glide解惑之如何管理生命周期/">
 
 
 
 
 
-  <title>WangCode's Blog</title>
+  <title>Glide解惑之如何管理生命周期 | WangCode's Blog</title>
   
 
 
@@ -142,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -216,9 +221,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -248,9 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/15/Glide解惑之如何管理生命周期/" itemprop="url">Glide解惑之如何管理生命周期</a></h1>
+          <h1 class="post-title" itemprop="name headline">Glide解惑之如何管理生命周期</h1>
         
 
         <div class="post-meta">
@@ -300,9 +303,7 @@
       
 
       
-        
-          
-            <p>本人在使用Glide图片下载框架的时候,一直有一个疑惑,它到底是怎么做到Context在Destory的时候自动停止下载请求的,带着好奇心的驱使我去了解了下源码,心里大概知道了真相.</p>
+        <p>本人在使用Glide图片下载框架的时候,一直有一个疑惑,它到底是怎么做到Context在Destory的时候自动停止下载请求的,带着好奇心的驱使我去了解了下源码,心里大概知道了真相.</p>
 <p>一般我们要下载图片，Glide是这样做的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Glide.with(context).load(url).into(imageview);</span><br></pre></td></tr></table></figure>
 <p>非常简洁精炼的用法,但是内部却做了大量的工作,下面一步一步来分析。</p>
@@ -334,8 +335,6 @@
 <p><strong>总结一下:Glide.with的时候会为context添加一个空白的Fragment,通过监听Fragment的生命周期,会在每次发生改变的时候遍历LifecycleListener,其实也就是RequestManager,调用其onStop,onDestroy方法达到暂停和取消请求的目的.</strong></p>
 <p>完。</p>
 
-          
-        
       
     </div>
     
@@ -352,153 +351,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/Android AudioRecord音频录制实现暂停功能/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WangCode">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WangCode's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/13/Android AudioRecord音频录制实现暂停功能/" itemprop="url">Android AudioRecord音频录制实现暂停功能</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T17:58:45+08:00">
-                2019-03-13
-              </time>
+              <a href="/2019/03/13/Android AudioRecord音频录制实现暂停功能/" rel="next" title="Android AudioRecord音频录制实现暂停功能">
+                <i class="fa fa-chevron-left"></i> Android AudioRecord音频录制实现暂停功能
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。</p>
-<ol>
-<li><p>首先先得初始化AudioRecord对象 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,</span><br><span class="line">        CHANNEL_CONFIG, AUDIO_FORMAT, minBufferSize);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>​       上面的参数具体指声道数,采样率以及最小缓冲区。</p>
-<ol start="2">
-<li><p>新建文件用来存储录制的音频数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC),</span><br><span class="line">        &quot;wenwenrecord.pcm&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>开启一个线程不断的往文件里面写数据</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">    //往文件里面写数据</span><br><span class="line">    audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-<p><strong>问题来了，官方只提供给了我们录制音频的接口，并没有提供暂停和停止的接口，该怎么实现呢？</strong></p>
-<p>嗯，其实只要仔细想一下就知道了，我在上面开启了一个线程往文件里面写数据，只需要定义一个标志变量用来判断是否继续写入数据就行了。如果是暂停录制就不执行audioRecord.read，如果是停止录制就跳出while循环。具体实现如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        FileOutputStream os = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            os = new FileOutputStream(file);</span><br><span class="line">        &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (null != os) &#123;</span><br><span class="line">            while (currentAudioState.get() == PAUSE_STATE ||</span><br><span class="line">                    currentAudioState.get() == REDORDING_STATE) &#123;</span><br><span class="line">                if (currentAudioState.get() == PAUSE_STATE) &#123;</span><br><span class="line">                    LogUtil.i(&quot;Record&quot;, &quot;pause...&quot;);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    int read = audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">                 </span><br><span class="line">                    if (AudioRecord.ERROR_INVALID_OPERATION != read) &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            os.write(data);</span><br><span class="line">                        &#125; catch (IOException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                LogUtil.i(TAG, &quot;run: close file output stream !&quot;);</span><br><span class="line">                os.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-<p>这里的currentAudioState定义为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 当前录音状态</span><br><span class="line"> */</span><br><span class="line">private AtomicInteger currentAudioState = new AtomicInteger(STOP_STATE);</span><br></pre></td></tr></table></figure>
-<p>为了保证在多线程环境下的原子操作我用了并发包里的AtomicInteger。</p>
-<p>完。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -508,138 +382,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WangCode">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WangCode's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/13/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-13T17:41:05+08:00">
-                2019-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -647,6 +394,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -850,6 +601,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
