@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="WangCode's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本文目的在此记录学习OpenGL ES的心得. 我大致整理了一下入门OpenGL必须理解并掌握的知识点，如果没有这些知识点的积累，我觉得很难去下手学习OpenGL.  一. 渲染的基本流程  可以从上图看出，我们可以简单的把顶点着色器理解为定义形状,片段着色器是渲染颜色的。 二. 坐标的变换  我们需要把本地坐标变换为屏幕坐标，也就是2D坐标。 三.Shader编程 着色器是使用一种叫GLSL的类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL ES Lesson 1">
+<meta property="og:url" content="http://yoursite.com/2019/06/12/OpenGL-ES-Lesson-1/index.html">
+<meta property="og:site_name" content="WangCode&#39;s Blog">
+<meta property="og:description" content="本文目的在此记录学习OpenGL ES的心得. 我大致整理了一下入门OpenGL必须理解并掌握的知识点，如果没有这些知识点的积累，我觉得很难去下手学习OpenGL.  一. 渲染的基本流程  可以从上图看出，我们可以简单的把顶点着色器理解为定义形状,片段着色器是渲染颜色的。 二. 坐标的变换  我们需要把本地坐标变换为屏幕坐标，也就是2D坐标。 三.Shader编程 着色器是使用一种叫GLSL的类">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://learnopengl-cn.readthedocs.io/zh/latest/img/01/04/pipeline.png">
+<meta property="og:image" content="http://zhangtielei.com/assets/photos_opengl_trans/part1/coordinate_system_overview.png">
+<meta property="og:image" content="https://xujiaji.oss-cn-beijing.aliyuncs.com/blog/learn-opengl/20190122233309.png">
+<meta property="og:updated_time" content="2019-06-12T07:25:59.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenGL ES Lesson 1">
+<meta name="twitter:description" content="本文目的在此记录学习OpenGL ES的心得. 我大致整理了一下入门OpenGL必须理解并掌握的知识点，如果没有这些知识点的积累，我觉得很难去下手学习OpenGL.  一. 渲染的基本流程  可以从上图看出，我们可以简单的把顶点着色器理解为定义形状,片段着色器是渲染颜色的。 二. 坐标的变换  我们需要把本地坐标变换为屏幕坐标，也就是2D坐标。 三.Shader编程 着色器是使用一种叫GLSL的类">
+<meta name="twitter:image" content="https://learnopengl-cn.readthedocs.io/zh/latest/img/01/04/pipeline.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/12/OpenGL-ES-Lesson-1/">
+
+
+
+
+
+  <title>OpenGL ES Lesson 1 | WangCode's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/AndroidLi123" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WangCode's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/OpenGL-ES-Lesson-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WangCode">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WangCode's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenGL ES Lesson 1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-12T14:36:49+08:00">
+                2019-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文目的在此记录学习OpenGL ES的心得.</p>
+<p>我大致整理了一下入门OpenGL必须理解并掌握的知识点，如果没有这些知识点的积累，我觉得很难去下手学习OpenGL. </p>
+<p>一. 渲染的基本流程</p>
+<p><img src="https://learnopengl-cn.readthedocs.io/zh/latest/img/01/04/pipeline.png" alt="img"></p>
+<p>可以从上图看出，我们可以简单的把顶点着色器理解为定义形状,片段着色器是渲染颜色的。</p>
+<p>二. 坐标的变换</p>
+<p><img src="http://zhangtielei.com/assets/photos_opengl_trans/part1/coordinate_system_overview.png" alt="åæ åæ¢æ¦è§å¾"></p>
+<p>我们需要把本地坐标变换为屏幕坐标，也就是2D坐标。</p>
+<p>三.Shader编程</p>
+<p>着色器是使用一种叫GLSL的类C语言写成的。GLSL是为图形计算量身定制的，它包含一些针对向量和矩阵操作的有用特性。我们必须学会Shader编程,才说入门了OpenGL.</p>
+<p>下面我用一个画三角形的经典例子来把上述的3个重要知识点串联起来过一遍,详细知识点会再接下来的博文中一一讲诉。</p>
+<p>在Android中,我们用GLSurfaceView显示OpenGL ES画的图形.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mGLSurfaceView.setRenderer(new LessonOneRenderer());</span><br></pre></td></tr></table></figure>
+<p>重点是LessonOneRenderer类,这个类通过实现Render接口来做操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">final String vertexShader =</span><br><span class="line">   &quot;uniform mat4 u_MVPMatrix;      \n&quot;       // A constant representing the combined model/view/projection matrix.</span><br><span class="line">   </span><br><span class="line">  + &quot;attribute vec4 a_Position;     \n&quot;       // Per-vertex position information we will pass in.</span><br><span class="line">  + &quot;attribute vec4 a_Color;        \n&quot;       // Per-vertex color information we will pass in.           </span><br><span class="line">  </span><br><span class="line">  + &quot;varying vec4 v_Color;          \n&quot;       // This will be passed into the fragment shader.</span><br><span class="line">  </span><br><span class="line">  + &quot;void main()                    \n&quot;       // The entry point for our vertex shader.</span><br><span class="line">  + &quot;&#123;                              \n&quot;</span><br><span class="line">  + &quot;   v_Color = a_Color;          \n&quot;       // Pass the color through to the fragment shader. </span><br><span class="line">                                 // It will be interpolated across the triangle.</span><br><span class="line">  + &quot;   gl_Position = u_MVPMatrix   \n&quot;    // gl_Position is a special variable used to store the final position.</span><br><span class="line">  + &quot;               * a_Position;   \n&quot;     // Multiply the vertex by the matrix to get the final point in                                                                 </span><br><span class="line">  + &quot;&#125;                              \n&quot;;    // normalized screen coordinates.</span><br></pre></td></tr></table></figure>
+<p>我们首先定义了一个顶点着色器,gl_Position = u_MVPMatrix*a_Position,这段代码的意思是通过坐标变换,转为屏幕坐标,也就是经过一系列的model,view,projection.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">final String fragmentShader =</span><br><span class="line">   &quot;precision mediump float;       \n&quot;       // Set the default precision to medium. We don&apos;t need as high of a </span><br><span class="line">                                 // precision in the fragment shader.            </span><br><span class="line">  + &quot;varying vec4 v_Color;          \n&quot;       // This is the color from the vertex shader interpolated across the </span><br><span class="line">                                 // triangle per fragment.          </span><br><span class="line">  + &quot;void main()                    \n&quot;       // The entry point for our fragment shader.</span><br><span class="line">  + &quot;&#123;                              \n&quot;</span><br><span class="line">  + &quot;   gl_FragColor = v_Color;     \n&quot;       // Pass the color directly through the pipeline.        </span><br><span class="line">  + &quot;&#125;                              \n&quot;;</span><br></pre></td></tr></table></figure>
+<p>此片段着色器就是通过顶点着色器传过来的v_color赋值给gl_FragColor.</p>
+<p>接下来其实就是模板代码,我觉得可以抽象出一个类来做.不过现在为了理解流程，就没有抽象出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// Load in the vertex shader.</span><br><span class="line">int vertexShaderHandle = GLES20.glCreateShader(GLES20.GL_VERTEX_SHADER);</span><br><span class="line"></span><br><span class="line">if (vertexShaderHandle != 0) </span><br><span class="line">&#123;</span><br><span class="line">   // Pass in the shader source.</span><br><span class="line">   GLES20.glShaderSource(vertexShaderHandle, vertexShader);</span><br><span class="line"></span><br><span class="line">   // Compile the shader.</span><br><span class="line">   GLES20.glCompileShader(vertexShaderHandle);</span><br><span class="line"></span><br><span class="line">   // Get the compilation status.</span><br><span class="line">   final int[] compileStatus = new int[1];</span><br><span class="line">   GLES20.glGetShaderiv(vertexShaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);</span><br><span class="line"></span><br><span class="line">   // If the compilation failed, delete the shader.</span><br><span class="line">   if (compileStatus[0] == 0) </span><br><span class="line">   &#123;           </span><br><span class="line">      GLES20.glDeleteShader(vertexShaderHandle);</span><br><span class="line">      vertexShaderHandle = 0;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是编译，连接上面的着色器语言。片段着色器类似，就不贴了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// Create a program object and store the handle to it.</span><br><span class="line">int programHandle = GLES20.glCreateProgram();</span><br><span class="line"></span><br><span class="line">if (programHandle != 0) </span><br><span class="line">&#123;</span><br><span class="line">   // Bind the vertex shader to the program.</span><br><span class="line">   GLES20.glAttachShader(programHandle, vertexShaderHandle);        </span><br><span class="line"></span><br><span class="line">   // Bind the fragment shader to the program.</span><br><span class="line">   GLES20.glAttachShader(programHandle, fragmentShaderHandle);</span><br><span class="line">   </span><br><span class="line">   // Bind attributes</span><br><span class="line">   GLES20.glBindAttribLocation(programHandle, 0, &quot;a_Position&quot;);</span><br><span class="line">   GLES20.glBindAttribLocation(programHandle, 1, &quot;a_Color&quot;);</span><br><span class="line">   </span><br><span class="line">   // Link the two shaders together into a program.</span><br><span class="line">   GLES20.glLinkProgram(programHandle);</span><br><span class="line"></span><br><span class="line">   // Get the link status.</span><br><span class="line">   final int[] linkStatus = new int[1];</span><br><span class="line">   GLES20.glGetProgramiv(programHandle, GLES20.GL_LINK_STATUS, linkStatus, 0);</span><br><span class="line"></span><br><span class="line">   // If the link failed, delete the program.</span><br><span class="line">   if (linkStatus[0] == 0) </span><br><span class="line">   &#123;           </span><br><span class="line">      GLES20.glDeleteProgram(programHandle);</span><br><span class="line">      programHandle = 0;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">  // Tell OpenGL to use this program when rendering.</span><br><span class="line">        GLES20.glUseProgram(programHandle);</span><br></pre></td></tr></table></figure>
+<p>最后就是通过programHandle通知GLES使用。</p>
+<p>然后我们在onDrawFrame方法里画三角形。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">private void drawTriangle(final FloatBuffer aTriangleBuffer)</span><br><span class="line">&#123;</span><br><span class="line">   // Pass in the position information</span><br><span class="line">   aTriangleBuffer.position(mPositionOffset);</span><br><span class="line">       GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,</span><br><span class="line">              mStrideBytes, aTriangleBuffer);        </span><br><span class="line">               </span><br><span class="line">       GLES20.glEnableVertexAttribArray(mPositionHandle);        </span><br><span class="line">       </span><br><span class="line">       // Pass in the color information</span><br><span class="line">       aTriangleBuffer.position(mColorOffset);</span><br><span class="line">       GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false,</span><br><span class="line">              mStrideBytes, aTriangleBuffer);</span><br><span class="line">       </span><br><span class="line">       GLES20.glEnableVertexAttribArray(mColorHandle);</span><br><span class="line">       </span><br><span class="line">   // This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix</span><br><span class="line">       // (which currently contains model * view).</span><br><span class="line">       Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);</span><br><span class="line">       </span><br><span class="line">       // This multiplies the modelview matrix by the projection matrix, and stores the result in the MVP matrix</span><br><span class="line">       // (which now contains model * view * projection).</span><br><span class="line">       Matrix.multiplyMM(mMVPMatrix, 0,  mMVPMatrix, 0, mProjectionMatrix, 0);</span><br><span class="line"></span><br><span class="line">       GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);</span><br><span class="line">       GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 3);                               </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们首先设置了缓冲区的位置偏移，然后把数据提供给了顶点着色器。最后经过矩阵变换把坐标投影到屏幕上了。</p>
+<p><code>GLES20.glUniformMatrix4fv()</code>方法将最终的矩阵传入顶点着色器。<br><code>GLES20.glDrawArrays()</code>将我们的点转换为三角形并将其绘制在屏幕上。</p>
+<p>这是截图</p>
+<p><img src="https://xujiaji.oss-cn-beijing.aliyuncs.com/blog/learn-opengl/20190122233309.png" alt="screenshot"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/09/为LinearLayout加入滑动以及分页效果/" rel="next" title="为LinearLayout加入滑动以及分页效果">
+                <i class="fa fa-chevron-left"></i> 为LinearLayout加入滑动以及分页效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WangCode</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WangCode</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
