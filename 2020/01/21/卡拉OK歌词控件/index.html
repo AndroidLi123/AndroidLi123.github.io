@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="WangCode's Blog" type="application/atom+xml">
 
@@ -81,17 +83,19 @@
 
 
 
-<meta name="description" content="AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。  首先先得初始化AudioRecord对象  12audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,        CHANNEL_C">
+<meta name="description" content="最近时间闲暇，把卡拉OK项目再总结一下。 卡拉OK项目中，需要用到歌词逐亮效果，但是网上的效果都不太好，也不符合产品需求，所以我索性自己写了一个控件出来供大家分享。 看下效果  两个问题点： 1.怎么实现逐亮歌词效果 2.怎么解析歌词 咱们先来解决第一个问题，怎么逐亮歌词。 刚开始我准备用LinearGradient来做，但是我试了下，效果不行，因为lineargradient有一个颜色过渡效果，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android AudioRecord音频录制实现暂停功能">
-<meta property="og:url" content="http://yoursite.com/2019/03/13/Android AudioRecord音频录制实现暂停功能/index.html">
+<meta property="og:title" content="卡拉OK歌词控件">
+<meta property="og:url" content="http://yoursite.com/2020/01/21/卡拉OK歌词控件/index.html">
 <meta property="og:site_name" content="WangCode&#39;s Blog">
-<meta property="og:description" content="AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。  首先先得初始化AudioRecord对象  12audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,        CHANNEL_C">
+<meta property="og:description" content="最近时间闲暇，把卡拉OK项目再总结一下。 卡拉OK项目中，需要用到歌词逐亮效果，但是网上的效果都不太好，也不符合产品需求，所以我索性自己写了一个控件出来供大家分享。 看下效果  两个问题点： 1.怎么实现逐亮歌词效果 2.怎么解析歌词 咱们先来解决第一个问题，怎么逐亮歌词。 刚开始我准备用LinearGradient来做，但是我试了下，效果不行，因为lineargradient有一个颜色过渡效果，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-13T12:06:03.790Z">
+<meta property="og:image" content="c:/Users/mobvoi/Desktop/6448b98fa20c4239bb7ce923eeb6c361.gif">
+<meta property="og:updated_time" content="2020-01-21T09:07:32.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android AudioRecord音频录制实现暂停功能">
-<meta name="twitter:description" content="AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。  首先先得初始化AudioRecord对象  12audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,        CHANNEL_C">
+<meta name="twitter:title" content="卡拉OK歌词控件">
+<meta name="twitter:description" content="最近时间闲暇，把卡拉OK项目再总结一下。 卡拉OK项目中，需要用到歌词逐亮效果，但是网上的效果都不太好，也不符合产品需求，所以我索性自己写了一个控件出来供大家分享。 看下效果  两个问题点： 1.怎么实现逐亮歌词效果 2.怎么解析歌词 咱们先来解决第一个问题，怎么逐亮歌词。 刚开始我准备用LinearGradient来做，但是我试了下，效果不行，因为lineargradient有一个颜色过渡效果，">
+<meta name="twitter:image" content="c:/Users/mobvoi/Desktop/6448b98fa20c4239bb7ce923eeb6c361.gif">
 
 
 
@@ -121,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/13/Android AudioRecord音频录制实现暂停功能/">
+  <link rel="canonical" href="http://yoursite.com/2020/01/21/卡拉OK歌词控件/">
 
 
 
 
 
-  <title>Android AudioRecord音频录制实现暂停功能 | WangCode's Blog</title>
+  <title>卡拉OK歌词控件 | WangCode's Blog</title>
   
 
 
@@ -234,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/13/Android AudioRecord音频录制实现暂停功能/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/21/卡拉OK歌词控件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WangCode">
@@ -251,7 +255,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android AudioRecord音频录制实现暂停功能</h1>
+          <h1 class="post-title" itemprop="name headline">卡拉OK歌词控件</h1>
         
 
         <div class="post-meta">
@@ -263,8 +267,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T17:58:45+08:00">
-                2019-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-21T15:38:26+08:00">
+                2020-01-21
               </time>
             
 
@@ -301,27 +305,171 @@
       
 
       
-        <p>AudioRecord官方API并没有实现音频暂停功能，Google了半天也没有找到具体的好的实现方法，所以我打算自己实现。先回顾一下音频开始录制的具体实现。</p>
-<ol>
-<li><p>首先先得初始化AudioRecord对象 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_INHZ,</span><br><span class="line">        CHANNEL_CONFIG, AUDIO_FORMAT, minBufferSize);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>​       上面的参数具体指声道数,采样率以及最小缓冲区。</p>
-<ol start="2">
-<li><p>新建文件用来存储录制的音频数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC),</span><br><span class="line">        &quot;wenwenrecord.pcm&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>开启一个线程不断的往文件里面写数据</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">    //往文件里面写数据</span><br><span class="line">    audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-<p><strong>问题来了，官方只提供给了我们录制音频的接口，并没有提供暂停和停止的接口，该怎么实现呢？</strong></p>
-<p>嗯，其实只要仔细想一下就知道了，我在上面开启了一个线程往文件里面写数据，只需要定义一个标志变量用来判断是否继续写入数据就行了。如果是暂停录制就不执行audioRecord.read，如果是停止录制就跳出while循环。具体实现如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        FileOutputStream os = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            os = new FileOutputStream(file);</span><br><span class="line">        &#125; catch (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (null != os) &#123;</span><br><span class="line">            while (currentAudioState.get() == PAUSE_STATE ||</span><br><span class="line">                    currentAudioState.get() == REDORDING_STATE) &#123;</span><br><span class="line">                if (currentAudioState.get() == PAUSE_STATE) &#123;</span><br><span class="line">                    LogUtil.i(&quot;Record&quot;, &quot;pause...&quot;);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    int read = audioRecord.read(data, 0, minBufferSize);</span><br><span class="line">                 </span><br><span class="line">                    if (AudioRecord.ERROR_INVALID_OPERATION != read) &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                            os.write(data);</span><br><span class="line">                        &#125; catch (IOException e) &#123;</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                LogUtil.i(TAG, &quot;run: close file output stream !&quot;);</span><br><span class="line">                os.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
-<p>这里的currentAudioState定义为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 当前录音状态</span><br><span class="line"> */</span><br><span class="line">private AtomicInteger currentAudioState = new AtomicInteger(STOP_STATE);</span><br></pre></td></tr></table></figure>
-<p>为了保证在多线程环境下的原子操作我用了并发包里的AtomicInteger。</p>
+        <p>最近时间闲暇，把卡拉OK项目再总结一下。</p>
+<p>卡拉OK项目中，需要用到歌词逐亮效果，但是网上的效果都不太好，也不符合产品需求，所以我索性自己写了一个控件出来供大家分享。</p>
+<p>看下效果</p>
+<p><img src="C:\Users\mobvoi\Desktop\6448b98fa20c4239bb7ce923eeb6c361.gif" alt="6448b98fa20c4239bb7ce923eeb6c361"></p>
+<p>两个问题点：</p>
+<p>1.怎么实现逐亮歌词效果</p>
+<p>2.怎么解析歌词</p>
+<p>咱们先来解决第一个问题，怎么逐亮歌词。</p>
+<p>刚开始我准备用LinearGradient来做，但是我试了下，效果不行，因为lineargradient有一个颜色过渡效果，</p>
+<p>所以呈现效果会有霓虹灯似的颜色，与逐亮效果不符合，这个方案放弃掉。后来又想到图层混合模式PorterDuffXfermode中的DST_IN,还有一种干脆就是直接覆盖原来的绘制，实现逐亮效果。后来我打算用直接覆盖的方式来实现。</p>
+<p>大体思路：首先是先绘制正常的一行不带进度没有逐亮效果的歌词，然后用另一个Paint绘制逐亮效果的歌词，卡拉ok歌词一般都会给到一个字的持续时间(需要解析歌词得到),我们可以用ValuneAnimator从0到一个字的宽度的过度量，然后时间就是解析得到的这个字的持续时间，通过update方法拿到宽度后，再绘制另一种颜色的歌词，这样的话，逐亮效果就有了。</p>
+<p>核心代码如下：</p>
+<pre><code>    //动画更新
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation) {
+    //取到最新的卡拉ok歌词宽度
+    karaokWith = (int) animation.getAnimatedValue();
+
+    if (karaokWith &lt;= 0) {
+        karaokWith = 1;
+    }
+
+    if (karaokWith &gt;= maxAnimateValue &amp;&amp; index &lt;= animationEntities.size() - 1) {
+        index++;
+
+        if (index &lt; animationEntities.size()) {
+            maxAnimateValue = (int) (wordWith * (index + 1));
+            mValueAnimator = ValueAnimator.ofInt(karaokWith,
+                    maxAnimateValue);
+            mValueAnimator.setDuration(animationEntities.get(index).getDuration());
+            mValueAnimator.addUpdateListener(this);
+            mValueAnimator.start();
+        }
+    }
+
+
+    if (index &gt; animationEntities.size() - 1) {
+        mPaint.setTextSize(40);
+        karaokWith = 1;
+
+        if (scrollView != null &amp;&amp; !isScroll) {
+            isScroll = true;
+
+        }
+
+    }
+    //更新画笔属性
+    titleWidth = (int) mPaint.measureText(mTitleName);
+    textBitmap = Bitmap.createBitmap(titleWidth, getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+    textCanvas = new Canvas(textBitmap);
+    kBitmap = Bitmap.createBitmap(karaokWith, getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+    kCanvas = new Canvas(kBitmap);
+
+    invalidate();
+}
+      @Override
+    protected void onDraw(Canvas canvas) {
+        fontMetrics = mPaint.getFontMetricsInt();
+        //文本绘制基线
+        int baseline = (targetRect.bottom + targetRect.top - fontMetrics.bottom -                 fontMetrics.top) / 2;
+        //绘制普通没有动画的歌词
+        textCanvas.drawText(mTitleName, 0, baseline, mPaint);
+        canvas.drawBitmap(textBitmap, (getMeasuredWidth() - titleWidth) / 2, 0, mPaint);
+
+        if (isStart) {
+            //绘制有逐亮效果的歌词
+            kCanvas.drawText(mTitleName, 0, baseline, mKarokPaint);
+            canvas.drawBitmap(kBitmap, (getMeasuredWidth() - titleWidth) / 2, 0, mKarokPaint);
+        }
+    }
+</code></pre><p>还有一点提一下，绘制文本的时候要正确计算baseline，如代码给出。这点就不详细展开了，自己去查，比较简单。</p>
+<p>好了逐亮效果有了，那改怎么解析歌词呢，一般卡拉ok歌词是如下的形式：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">[04:31.27]<1412>我<372>的<256>牵<294>挂 <268>我<262>的<251>渴<233>望 <248>直<271>至<248>以<242>后</242></248></271></248></233></251></262></268></294></256></372></1412></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>最开头是这段歌词的开始演唱时间戳，后面跟着的是这个字的持续时间多长。</p>
+<p>那么我们该怎么解析才合适呢？可以想到的是用正则表达式方法来匹配我们想要的数据格式。先解析开始时间，让然后解析一个字的持续时间，用正则匹配可以很快很方便的计算出来。</p>
+<p>自动滚动我们加一个ScrollView,然后等到一行歌词动画完成自动下一行歌词等到开始演唱时间到了后开启逐亮动画</p>
+<p>下面是封装的一个歌词控件代码：</p>
+<p>public class KaraokScrollView extends FrameLayout {</p>
+<pre><code>private ScrollView mScrollView;
+private LinearLayout mLinearLayout;
+private List&lt;CountDownTimer&gt; countDownTimers = new ArrayList&lt;&gt;();
+
+public KaraokScrollView(@NonNull Context context) {
+    super(context);
+    init();
+}
+
+public KaraokScrollView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    super(context, attrs);
+    init();
+}
+
+public KaraokScrollView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+}
+
+
+private void init() {
+    inflate(getContext(),R.layout.layout_lyric,this);
+    mScrollView = findViewById(R.id.sl);
+    mLinearLayout = findViewById(R.id.ll_lyric);
+
+}
+
+public void setData(List&lt;LineLyricEntity&gt;entities) {
+    for(int i=0;i&lt;entities.size();i++) {
+        LineLyricEntity entity = entities.get(i);
+        DrawTextView drawTextView = new DrawTextView(getContext());
+        drawTextView.setmTitleSize(40);
+        drawTextView.setAnimationEntities(entity.getAnimationEntities());
+        drawTextView.setmTitleColor(R.color.design_default_color_primary_dark);
+        drawTextView.setScrollView(mScrollView);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                100);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        drawTextView.setLayoutParams(params);
+        long time = entity.getStartTime();
+        CountDownTimer timer = new CountDownTimer(time, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                mScrollView.smoothScrollBy(0, 100);
+                drawTextView.startAnimation();
+
+            }
+        };
+
+        countDownTimers.add(timer);
+        mLinearLayout.addView(drawTextView);
+    }
+
+
+}
+
+public void scrollWith(int x,int y) {
+    mScrollView.smoothScrollBy(x,y);
+
+}
+
+public void startAnimation() {
+    for(int i=0;i&lt;countDownTimers.size();i++) {
+        CountDownTimer timer = countDownTimers.get(i);
+        timer.start();
+    }
+}
+</code></pre><p>}</p>
 <p>完。</p>
 
       
@@ -347,15 +495,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/01/19/FFmpeg解码/" rel="next" title="FFmpeg音频解码以及用OpenSL ES播放">
+                <i class="fa fa-chevron-left"></i> FFmpeg音频解码以及用OpenSL ES播放
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/15/Glide解惑之如何管理生命周期/" rel="prev" title="Glide解惑之如何管理生命周期">
-                Glide解惑之如何管理生命周期 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

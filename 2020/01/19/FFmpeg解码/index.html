@@ -73,8 +73,6 @@
 
 
 
-  
-
 
   <link rel="alternate" href="/atom.xml" title="WangCode's Blog" type="application/atom+xml">
 
@@ -90,7 +88,7 @@
 <meta property="og:site_name" content="WangCode&#39;s Blog">
 <meta property="og:description" content="因为项目需要,需要在Android用到FFmpeg来实现音频编解码以及用OpenSL ES实现C++层的音频播放功能。趁着最近时间空闲，把用到的知识点整理出来以供备用。 解码流程： 第一步  avformat_open_input:打开输入流 第二步  avcodec_find_decoder:查找解码器 第三步  avcodec_open2:打开解码器 第四步  av_read_frame:读取">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-20T06:32:52.436Z">
+<meta property="og:updated_time" content="2020-01-21T09:07:54.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg音频解码以及用OpenSL ES播放">
 <meta name="twitter:description" content="因为项目需要,需要在Android用到FFmpeg来实现音频编解码以及用OpenSL ES实现C++层的音频播放功能。趁着最近时间空闲，把用到的知识点整理出来以供备用。 解码流程： 第一步  avformat_open_input:打开输入流 第二步  avcodec_find_decoder:查找解码器 第三步  avcodec_open2:打开解码器 第四步  av_read_frame:读取">
@@ -325,6 +323,7 @@
 <p>重点，在播放回调函数里，我们从解码数据队列取出数据，然后Enqueue数据播放，没有数据就Enqueue空数据让其继续回调bytecallback函数，不然的话回调函数就停止回调了，播放也就停止了。</p>
 <p>还有就是队列数据不能太多，容易造成噪音现象，我的猜测是当数据过多后，队列后一部分的数据可能先于前一部分的数据消费播放出来造成的。所以可以用C++的信号量机制来同步限制消费数据，我的实验结果是一般size大于5就锁住队列等待了，等队列小于5再进队列。</p>
 <p>我现在的做法是一个线程做解码，一个线程播放，然后通过公用资源队列并用信号量机制来达到控制消费从而实现播放。</p>
+<p>完。</p>
 
       
     </div>
@@ -358,6 +357,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/21/卡拉OK歌词控件/" rel="prev" title="卡拉OK歌词控件">
+                卡拉OK歌词控件 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -425,7 +428,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
